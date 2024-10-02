@@ -1,17 +1,50 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header class="header">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title>NeoApp</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-title size="large">Buscador de Asteroides</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div class="container">
+    <div class="date-picker-container">
+      <ion-label class="date-label">Selecciona una fecha:</ion-label>
+      <ion-datetime 
+        displayFormat="YYYY-MM-DD" 
+        [(ngModel)]="selectedDate" 
+        (ionChange)="onDateChange($event)" 
+        presentation="date"
+        [value]="selectedDate">
+      </ion-datetime>
+      <ion-label *ngIf="selectedDate" class="selected-date">
+        Fecha seleccionada: {{ selectedDate | date: 'yyyy-MM-dd' }}
+      </ion-label>
+    </div>
+
+    <ion-button expand="full" class="search-button" (click)="searchAsteroids()">Buscar Asteroides</ion-button>
+
+    <!-- Mostrar la cantidad de asteroides encontrados -->
+    <ion-label *ngIf="asteroids.length > 0" class="result-label">
+      Se encontraron {{ asteroids.length }} asteroides para la fecha seleccionada.
+    </ion-label>
+
+    <ion-list *ngIf="asteroids.length > 0">
+      <ion-card *ngFor="let asteroid of asteroids" class="asteroid-card">
+        <ion-card-header>
+          <ion-card-title>{{ asteroid.name }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p><strong>Diámetro estimado:</strong> {{ asteroid.estimated_diameter }} km</p>
+          <p><strong>Distancia de aproximación:</strong> {{ asteroid.miss_distance }} km</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+
+    <ion-item *ngIf="asteroids.length === 0">
+      <ion-label>No se encontraron asteroides para la fecha seleccionada.</ion-label>
+    </ion-item>
+  </div>
+
 </ion-content>
