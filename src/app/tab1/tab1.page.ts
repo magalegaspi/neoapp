@@ -43,14 +43,14 @@ export class Tab1Page implements OnInit {
     }
 
     this.asteroidsService.asteroids = []; // Reiniciar la lista de asteroides
-    
+
     const apiKey = 'IbcwJVTzW74LWfiBnw6NLdeWKKggHlzY4t1kH5gO';
     const apiUrl = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${this.selectedDate}&end_date=${this.selectedDate}&api_key=${apiKey}`;
 
     this.http.get(apiUrl).subscribe({
       next: (response: any) => {
         const nearEarthObjects = response.near_earth_objects[this.selectedDate] || [];
-        
+
         this.asteroidsService.asteroids = nearEarthObjects.map((asteroid: any) => ({
           name: asteroid.name,
           estimated_diameter: asteroid.estimated_diameter.kilometers.estimated_diameter_max,
