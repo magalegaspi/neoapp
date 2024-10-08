@@ -9,6 +9,10 @@ export class Tab2Page {
 
   constructor() {}
 
+  ionViewWillEnter() {
+    console.log("Cargando datos de la Tierra...");
+    // Lógica para cargar datos de la Tierra
+  }
   
 
 }

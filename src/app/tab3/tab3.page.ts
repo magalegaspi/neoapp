@@ -9,4 +9,10 @@ export class Tab3Page {
 
   constructor() {}
 
+
+  ionViewWillEnter() {
+    console.log("Cargando foto del día...");
+    // Lógica para cargar foto del día
+  }
+  
 }
