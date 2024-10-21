@@ -11,12 +11,18 @@ export class Tab1Page implements OnInit {
   constructor(private http: HttpClient, public asteroidsService: AsteroidsService) {}
 
   ngOnInit() {
-    // Aquí puedes inicializar variables o realizar cualquier acción al cargar la página.
-    // Por ejemplo, si quieres establecer una fecha por defecto:
-    if (!this.asteroidsService.selectedDate) {
-      const today = new Date();
-      this.selectedDate = today.toISOString().split('T')[0]; // Establecer la fecha actual
-    }
+    console.log("Funcionando");
+  }
+
+  ionViewWillEnter() {
+    // Siempre que entre al tab, se utiliza la fecha del dia de hoy para que muestre resultados de una
+    console.log("Adentro de ionViewWillEnter");
+    const today = new Date();
+    this.selectedDate = today.toISOString().split('T')[0]; // solo la parte de la fecha
+
+    // Realizar la búsqueda de asteroides para la fecha actual
+    this.searchAsteroids();
+    console.log("Fin de ionViewWillEnter");
   }
 
   get selectedDate() {

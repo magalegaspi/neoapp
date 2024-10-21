@@ -1,5 +1,5 @@
 import { AlertController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage  {
 
   formularioLogin: FormGroup;
 
@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  
 
   async ingresar() {
     const f = this.formularioLogin.value;
@@ -39,6 +39,8 @@ export class LoginPage implements OnInit {
         buttons: ['Aceptar']
       });
       await alert.present();
+      // @Gabi Si los datos son incorrectos, se borran el usuario y contraseña en la proxima linea
+      this.formularioLogin.reset();
     }
   }
 
