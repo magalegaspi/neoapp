@@ -1,12 +1,10 @@
-
 <ion-content [fullscreen]="true">
-
   <ion-card>
     <ion-card-header>
       <ion-card-title>Login</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <form [formGroup]="formularioLogin"> <!-- Esto proviene del ts formularioLogin: FormGroup; -->
+      <form [formGroup]="formularioLogin">
         <ion-item>
           <ion-label position="floating">Nombre</ion-label>
           <ion-input formControlName="nombre"></ion-input>
@@ -17,9 +15,13 @@
         </ion-item>
       </form>
       <br>
-      <ion-button expand="block" (click)="ingresar()">
-        Ingresar
+
+      <!-- Botón de Google -->
+      <ion-button expand="block" class="google-button" (click)="loginWithGoogle()">
+        Iniciar sesión con Google
       </ion-button>
+
+
 
       <ion-footer>
         <ion-toolbar color="primary">

@@ -6,6 +6,6 @@ import { Injectable } from '@angular/core';
 export class AsteroidsService {
   selectedDate: string = '';
   asteroids: any[] = [];
-  
+
   constructor() {}
 }
