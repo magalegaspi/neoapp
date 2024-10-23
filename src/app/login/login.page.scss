@@ -1,13 +1,9 @@
-/* Estilo del botón de Google */
 .google-button {
-  background-color: #db4437 !important; /* Forzar el color rojo */
-  color: white !important;              /* Forzar el texto en blanco */
-  font-weight: bold;
-  border-radius: 5px;
-  height: 40px;
+  background-color: #ff6666 !important; /* Rojo más claro */
+  color: white !important; /* Texto blanco */
 }
 
-ion-button {
-  height: 40px;
-  font-size: 16px;
+ion-button.google-button {
+  --background: #ff6666 !important; /* Color rojo para el fondo del botón */
+  --color: white !important; /* Asegura que el texto sea blanco */
 }
