@@ -148,3 +148,24 @@ body {
   .botonLugar {
     font-size : 10px;
   }
+  .button-container {
+    display: flex; /* Usa flexbox */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    margin-top: 16px; /* Espacio adicional si es necesario */
+  }
+  
+  .contraseña {
+    min-height: 1cap; /* Altura mínima del campo */
+    max-height: 20px; /* Altura máxima del campo */
+    font-size: 10px; /* Tamaño de fuente */
+    padding: 4px; /* Espaciado interno */
+    margin-top: 0; /* Margen superior para alineación */
+  }
+  
+  
+  /* Si necesitas ajustar el ion-item también */
+  ion-item {
+    --min-height: 56px; /* Establece una altura mínima adecuada para el ion-item */
+    padding: 0; /* Elimina el padding extra */
+  }
+  

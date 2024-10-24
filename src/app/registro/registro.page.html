@@ -13,18 +13,21 @@
     </ion-card-header>
     <ion-card-content>
       <form [formGroup]="formularioRegistro" (keyup.enter)="guardar()">
-        
+
+        <!-- Campo Nombre -->
         <ion-item>
           <ion-label position="floating">Nombre</ion-label>
           <ion-input formControlName="nombre"></ion-input>
         </ion-item>
 
+        <!-- Campo Contraseña -->
         <ion-item>
           <ion-label position="floating">Contraseña</ion-label>
           <ion-input 
             [type]="passwordFieldType" 
             formControlName="password" 
-            fill="solid">
+            fill="solid"
+            class="contraseña">
           </ion-input>
           <ion-button 
             fill="clear" 
@@ -35,6 +38,7 @@
           </ion-button>
         </ion-item>
 
+        <!-- Campo Confirmar Contraseña -->
         <ion-item>
           <ion-label position="floating">Confirmar contraseña</ion-label>
           <ion-input 
@@ -46,6 +50,7 @@
             fill="clear" 
             size="small" 
             slot="end" 
+            class="contraseña"
             (click)="toggleConfirmPasswordVisibility()">
             <ion-icon [name]="confirmPasswordIcon"></ion-icon>
           </ion-button>
