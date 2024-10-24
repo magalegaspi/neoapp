@@ -1,56 +1,132 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+
 /* Estilos personalizados para la aplicación de la NASA */
 body {
-    background-color: #001f3f; /* Fondo azul oscuro */
-    color: #0b3d91; /* Texto blanco */
-    font-family: 'Orbitron', sans-serif; /* Tipografía de estilo futurista */
+  background: linear-gradient(135deg, #001f3f, #000000);
+    color: #0b3d91; 
+    font-family: 'Orbitron', sans-serif; 
     text-align: center;
   }
 
   .container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra los elementos horizontalmente */
-    padding: 16px; /* Espaciado interno */
-    width: 100%; /* Asegúrate de que el contenedor ocupe el 100% del ancho */
+    align-items: center; 
+    padding: 16px; 
+    width: 100%; 
+    background: linear-gradient(135deg, #001f3f, #000000);
   }
   
   .date-picker-container {
-    width: 100%; /* Ocupa todo el ancho */
-    text-align: center; /* Centra el texto */
+    width: 100%; 
+    text-align: center; 
   }
   
   .date-label {
-    margin-bottom: 8px; /* Espacio entre la etiqueta y el calendario */
-    color: #0b3d91; /* Cambia el color a verde */
-    font-family: 'Orbitron', sans-serif; /* Mantiene la tipografía de estilo futurista */
+    margin-bottom: 8px; 
+    color: #FFFFFF; 
+    font-family: 'Orbitron', sans-serif; 
   }
   
   ion-datetime {
-    --color: #0b3d91; /* Color del texto */
-    --border-radius: 10px; /* Bordes redondeados */
-    margin: 0 auto; /* Centra el calendario */
-    width: 100%; /* Asegúrate de que ocupe todo el ancho disponible */
-    max-width: 300px; /* Establece un ancho máximo para el calendario */
-    margin-bottom: 16px; /* Espacio debajo del calendario */
-    font-family: 'Orbitron', sans-serif; /* Mantiene la tipografía de estilo futurista */
+    --color: #FFFFFF;
+    --border-radius: 10px; 
+    margin: 0 auto; 
+    width: 100%; 
+    max-width: 300px; 
+    margin-bottom: 16px; 
+    font-family: 'Orbitron', sans-serif; 
   }
   
   .selected-date {
-    color: #0b3d91; /* Color del texto de la fecha seleccionada */
-    margin-top: 8px; /* Espacio entre la fecha seleccionada y el botón */
-    font-family: 'Orbitron', sans-serif; /* Mantiene la tipografía de estilo futurista */
+    color: #FFFFFF; 
+    margin-top: 8px; 
+    font-family: 'Orbitron', sans-serif; 
   }
   
   .search-button {
-    background-color: #0b3d91; /* Color de fondo azul para botones */
-    color: white; /* Texto blanco */
-    margin-bottom: 16px; /* Margen debajo del botón */
-    font-family: 'Orbitron', sans-serif; /* Mantiene la tipografía de estilo futurista */
+    background-color: #0b3d91;
+    color: white; 
+    margin-bottom: 16px; 
+    font-family: 'Orbitron', sans-serif; 
   }
   
   .result-label {
-    color: #0b3d91; /* Color blanco para la etiqueta de resultados */
-    margin-top: 16px; /* Espacio encima del texto de resultados */
-    font-family: 'Orbitron', sans-serif; /* Mantiene la tipografía de estilo futurista */
+    color: #FFFFFF;
+    margin-top: 16px;
+    font-family: 'Orbitron', sans-serif; 
+  }
+
+  .header {
+    background-color: #0b3d91;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
   }
   
+  .earth-image {
+    width: 50%;  // Mitad del tamaño de la pantalla
+    height: auto;
+  }
+  
+  h2 {
+    color: #FFFFFF;
+    font-family: 'Orbitron', sans-serif; 
+  }
+
+  .info {
+    color: #FFFFFF;
+    font-family: 'Orbitron', sans-serif; 
+  }
+
+  .lugar-imagen {
+    width: 100px;   /* Ajusta el tamaño según sea necesario */
+    height: 100px;
+    object-fit: cover;  /* Para que la imagen no se distorsione */
+    margin-bottom: 10px;  /* Espacio entre la imagen y el botón */
+  }
+
+  .navBar {
+    font-family: 'Orbitron', sans-serif; 
+    font-size: x-large;
+  }

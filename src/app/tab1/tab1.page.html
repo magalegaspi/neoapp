@@ -1,9 +1,8 @@
-<ion-content [fullscreen]="true">
-  <ion-header class="header">
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <ion-header>
     <ion-toolbar>
-      <ion-title>NeoApp</ion-title>
-    </ion-toolbar>
-    <ion-toolbar>
+      <ion-title class="navBar">NeoApp</ion-title>
       <ion-title size="large">Buscador de Asteroides</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -25,7 +24,6 @@
 
     <ion-button expand="full" class="search-button" (click)="searchAsteroids()">Buscar Asteroides</ion-button>
 
-    <!-- Mostrar la cantidad de asteroides encontrados -->
     <ion-label *ngIf="asteroids.length > 0" class="result-label">
       Se encontraron {{ asteroids.length }} asteroides para la fecha seleccionada.
     </ion-label>
@@ -46,5 +44,4 @@
       <ion-label>No se encontraron asteroides para la fecha seleccionada.</ion-label>
     </ion-item>
   </div>
-
 </ion-content>
