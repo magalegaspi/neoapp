@@ -6,4 +6,18 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-content *ngIf="imagenDelDia">
+    <div class="container">
+    <ion-card-content>
+      <h2>{{ imagenDelDia.title }}</h2>
+    </ion-card-content>
+    <ion-card>
+      <img [src]="imagenDelDia.url" *ngIf="imagenDelDia.media_type === 'image'"/>
+    </ion-card>
+    </div>
+
+    <ion-content *ngIf="!imagenDelDia">
+      <p>Cargando...</p>
+    </ion-content>
+
 </ion-content>

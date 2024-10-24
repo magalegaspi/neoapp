@@ -130,3 +130,21 @@ body {
     font-family: 'Orbitron', sans-serif; 
     font-size: x-large;
   }
+
+  .chiquito {
+    --padding-start: 1px;
+  --padding-end: 1px;
+  --padding-top: 1px;
+  --padding-bottom: 1px;
+  font-size: 10px; 
+  height: 24px; 
+  min-height: 24px; 
+  }
+
+  .cerrarSesionChiquito {
+    font-size: 12px; 
+  }
+
+  .botonLugar {
+    font-size : 10px;
+  }

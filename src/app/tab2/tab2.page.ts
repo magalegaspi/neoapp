@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { EarthService } from '../services/earth.service';
 import { AlertController } from '@ionic/angular';
-import { lastValueFrom } from 'rxjs'; // Importa lastValueFrom de una biblioteca que permite la programación reactiva usando Observables
-// Los Observables son objetos que representan flujos de datos asíncronos y te permiten manejar eventos como clics, respuestas HTTP, y más de manera eficiente.
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-tab2',
@@ -10,9 +9,9 @@ import { lastValueFrom } from 'rxjs'; // Importa lastValueFrom de una biblioteca
   styleUrls: ['./tab2.page.scss']
 })
 export class Tab2Page {
-  imagenSatelital: string | null = null;  // Inicializa como null, se llena dependiendo la info de abajo
+  imagenSatelital: string | null = null;  
+  tituloLugarSeleccionado: string | null = null;  // Variable para el título del lugar seleccionado
 
-  // Lista de lugares de interés con nombre, latitud y longitud para mandar como parámetro a la API
   lugaresInteres = [
     { nombre: 'Chichen Itzá', lat: 20.6843, lon: -88.5678, imagen: "assets/imagenes/chichenitza.jpg" },
     { nombre: 'Cristo Redentor', lat: -22.9519, lon: -43.2105, imagen: "assets/imagenes/cristoredentor.jpg" },
@@ -30,66 +29,64 @@ export class Tab2Page {
     private alertController: AlertController 
   ) {}
 
-  // Función para mostrar la alerta si la API no devuelve el blob para la url = imagen
   async mostrarAlerta() {
+    this.tituloLugarSeleccionado = null; // Reiniciar el título al mostrar la alerta, para que no aparezca si hay un error con la imagen
     const alert = await this.alertController.create({
       header: 'Ups!',
-      message: 'Un alienigena se robó la imagen en el camino. Por favor, proba más tarde o elegí otro destino.',
+      message: 'Un alienígena se robó la imagen en el camino. Por favor, prueba más tarde o elige otro destino.',
       buttons: ['OK']
     });
-
     await alert.present();
   }
 
-  // Función para obtener la imagen satelital de la ubicación actual
-  async obtenerImagenSatelital() {
+  async obtenerImagenUsuario() {
+    // Cambia el título cuando se presiona el botón
+    this.tituloLugarSeleccionado = "Como me ven los alienígenas"; 
+    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
-          // Obtiene latitud y longitud gracias a la geolocalizacion que acepta el usuario
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
           try {
-            // Usamos lastValueFrom para convertir el Observable en una Promise, facilitando su manejo con async/await.
-            // Un Observable es una fuente de datos que emite múltiples valores a lo largo del tiempo, mientras que una Promise representa un único valor que se resolverá en el futuro.
             const imagenBlob = await lastValueFrom(this.earthService.obtenerImagenSatelital(lat, lon)); 
             if (imagenBlob) {
-              this.imagenSatelital = URL.createObjectURL(imagenBlob); // La función obtiene como parámetro un BLOB y crea un URL con la función ".createObjectURL" para mostrar la imagen en pantalla
+              this.imagenSatelital = URL.createObjectURL(imagenBlob); // Se obtiene la imagen satelital
             } else {
-              this.mostrarAlerta();  // Mostrar alerta si no hay imagen
+              this.mostrarAlerta(); // Muestra alerta si no se obtiene la imagen
               this.imagenSatelital = null;
             }
           } catch (error) {
             console.error('Error obteniendo la imagen satelital:', error);
-            this.mostrarAlerta();  // Mostrar alerta en caso de error
+            this.mostrarAlerta(); // Muestra alerta en caso de error
             this.imagenSatelital = null;
           }
         },
         (error) => {
           console.error('Error al obtener la ubicación:', error);
-          this.mostrarAlerta();  // Mostrar alerta si falla la geolocalización
+          this.mostrarAlerta(); // Muestra alerta si no se puede obtener la ubicación
         }
       );
     } else {
       console.error('Geolocalización no es soportada por este navegador.');
-      this.mostrarAlerta();  // Mostrar alerta si la geolocalización no es compatible
+      this.mostrarAlerta(); // Muestra alerta si geolocalización no está soportada
     }
   }
 
-  // Función para obtener la imagen de un lugar de interés seleccionado
   async obtenerImagenDeLugar(lugar: { nombre: string; lat: number; lon: number }) {
+    this.tituloLugarSeleccionado = lugar.nombre;  // Actualiza el título con el lugar seleccionado
     try {
       const imagenBlob = await lastValueFrom(this.earthService.obtenerImagenSatelital(lugar.lat, lugar.lon));
       if (imagenBlob) {
-        this.imagenSatelital = URL.createObjectURL(imagenBlob);
+        this.imagenSatelital = URL.createObjectURL(imagenBlob); // Se obtiene la imagen satelital
       } else {
-        this.mostrarAlerta();  // Mostrar alerta si no hay imagen
+        this.mostrarAlerta(); // Muestra alerta si no se obtiene la imagen
         this.imagenSatelital = null;
       }
     } catch (error) {
       console.error('Error obteniendo la imagen satelital:', error);
-      this.mostrarAlerta();  // Mostrar alerta en caso de error
+      this.mostrarAlerta(); // Muestra alerta en caso de error
       this.imagenSatelital = null;
     }
   }

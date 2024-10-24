@@ -21,8 +21,8 @@ export class TabsPage {
 
   async cerrarSesion() {
     const alert = await this.alertController.create({
-      header: 'Confirmar',
-      message: '¿Está seguro que desea cerrar sesión?',
+      header: 'Escape en proceso',
+      message: '¿Estás seguro que querés abortar la misión?',
       buttons: [
         {
           text: 'Cancelar',

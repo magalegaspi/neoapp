@@ -8,9 +8,17 @@
 
   <div class="container">
     <!-- Botón para obtener la imagen de la ubicación actual -->
-    <ion-button expand="full" (click)="obtenerImagenSatelital()">
-      Quiero una foto de donde estoy
+    <ion-button expand="full" (click)="obtenerImagenUsuario()">
+      Quiero una selfie desde el espacio
     </ion-button>
+
+    <!-- Mostrar el título del lugar seleccionado -->
+    <h2 *ngIf="tituloLugarSeleccionado">{{ tituloLugarSeleccionado }}</h2>
+    
+    <!-- Mostrar la imagen satelital obtenida justo debajo del botón -->
+    <div *ngIf="imagenSatelital" class="image-container">
+      <img [src]="imagenSatelital" alt="Imagen satelital" class="earth-image"/>
+    </div>
 
     <!-- Tabla de lugares de interés con botones -->
     <div class="container">
@@ -22,7 +30,7 @@
             <img [src]="lugar.imagen" alt="{{ lugar.nombre }}" class="lugar-imagen"/>
 
             <!-- Botón para obtener la imagen satelital del lugar -->
-            <ion-button expand="full" (click)="obtenerImagenDeLugar(lugar)">
+            <ion-button expand="full" class="botonLugar" (click)="obtenerImagenDeLugar(lugar)">
               {{ lugar.nombre }}
             </ion-button>
           </ion-col>
@@ -30,9 +38,5 @@
       </ion-grid>
     </div>
 
-    <!-- Mostrar la imagen satelital obtenida -->
-    <div *ngIf="imagenSatelital" class="image-container">
-      <img [src]="imagenSatelital" alt="Imagen satelital" class="earth-image"/>
-    </div>
   </div>
 </ion-content>

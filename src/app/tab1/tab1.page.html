@@ -1,5 +1,4 @@
 <ion-content [fullscreen]="true" class="ion-padding">
-  
   <ion-header>
     <ion-toolbar>
       <ion-title class="navBar">NeoApp</ion-title>
@@ -12,36 +11,44 @@
       <ion-label class="date-label">Selecciona una fecha:</ion-label>
       <ion-datetime 
         displayFormat="YYYY-MM-DD" 
-        [(ngModel)]="selectedDate" 
-        (ionChange)="onDateChange($event)" 
+        [(ngModel)]="fechaSeleccionada" 
+        (ionChange)="alCambiarFecha($event)" 
         presentation="date"
-        [value]="selectedDate">
+        [value]="fechaSeleccionada">
       </ion-datetime>
-      <ion-label *ngIf="selectedDate" class="selected-date">
-        Fecha seleccionada: {{ selectedDate | date: 'yyyy-MM-dd' }}
+      <ion-label *ngIf="fechaSeleccionada" class="selected-date">
+        Fecha seleccionada: {{ fechaSeleccionada | date: 'yyyy-MM-dd' }}
       </ion-label>
     </div>
 
-    <ion-button expand="full" class="search-button" (click)="searchAsteroids()">Buscar Asteroides</ion-button>
+    <ion-button expand="full" class="search-button" (click)="buscarAsteroides()">Buscar Asteroides</ion-button>
 
-    <ion-label *ngIf="asteroids.length > 0" class="result-label">
-      Se encontraron {{ asteroids.length }} asteroides para la fecha seleccionada.
-    </ion-label>
+    <!-- Botón para borrar caché -->
+    <ion-button expand="full" color="danger" (click)="borrarCache()">Borrar Caché</ion-button>
 
-    <ion-list *ngIf="asteroids.length > 0">
-      <ion-card *ngFor="let asteroid of asteroids" class="asteroid-card">
+    <!-- Botón para mostrar asteroides de hoy -->
+    <ion-button expand="full" color="secondary" (click)="mostrarAsteroidesHoy()">Mostrar Asteroides de Hoy</ion-button>
+
+    <!-- Spinner que se muestra solo mientras se está buscando asteroides -->
+    <ion-spinner color="white" *ngIf="buscando" name="crescent"></ion-spinner>
+
+    <!-- Mensaje que se muestra si no se encontraron asteroides, después de una búsqueda -->
+    <ion-item *ngIf="busquedaRealizada && !buscando && asteroides.length === 0">
+      <ion-label>No se encontraron asteroides para la fecha seleccionada.</ion-label>
+    </ion-item>
+
+    <!-- Lista de asteroides si se encontraron resultados -->
+    <ion-list *ngIf="asteroides.length > 0">
+      <ion-card *ngFor="let asteroide of asteroides" class="asteroid-card">
         <ion-card-header>
-          <ion-card-title>{{ asteroid.name }}</ion-card-title>
+          <ion-card-title>{{ asteroide.name }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <p><strong>Diámetro estimado:</strong> {{ asteroid.estimated_diameter }} km</p>
-          <p><strong>Distancia de aproximación:</strong> {{ asteroid.miss_distance }} km</p>
+          <p><strong>Diámetro estimado:</strong> {{ asteroide.estimated_diameter }} km</p>
+          <p><strong>Distancia de aproximación:</strong> {{ asteroide.miss_distance }} km</p>
         </ion-card-content>
       </ion-card>
     </ion-list>
 
-    <ion-item *ngIf="asteroids.length === 0">
-      <ion-label>No se encontraron asteroides para la fecha seleccionada.</ion-label>
-    </ion-item>
   </div>
 </ion-content>

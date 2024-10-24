@@ -2,8 +2,8 @@ import { AlertController } from '@ionic/angular';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/compat/auth'; // Importa AngularFireAuth
-import firebase from 'firebase/compat/app'; // Importa Firebase
+import { AngularFireAuth } from '@angular/fire/compat/auth'; 
+import firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +14,15 @@ export class LoginPage {
 
   formularioLogin: FormGroup;
 
+  // Control de visibilidad del campo de contraseña
+  passwordFieldType: string = 'password';
+  passwordIcon: string = 'eye-off';
+
   constructor(
     public fb: FormBuilder,
     public alertController: AlertController,
     private router: Router,
-    private afAuth: AngularFireAuth // Inyecta AngularFireAuth
+    private afAuth: AngularFireAuth 
   ) {
     this.formularioLogin = this.fb.group({
       'nombre': new FormControl("", Validators.required),
@@ -26,15 +30,25 @@ export class LoginPage {
     });
   }
 
+  // Alternar visibilidad del campo de contraseña
+  togglePasswordVisibility() {
+    if (this.passwordFieldType === 'password') {
+      this.passwordFieldType = 'text';
+      this.passwordIcon = 'eye';
+    } else {
+      this.passwordFieldType = 'password';
+      this.passwordIcon = 'eye-off';
+    }
+  }
+
   async ingresar() {
     const f = this.formularioLogin.value;
     const usuarioString = localStorage.getItem('usuario');
     const usuario = usuarioString ? JSON.parse(usuarioString) : null;
 
-    // Lógica de inicio de sesión usando almacenamiento local (actualmente)
     if (usuario && usuario.nombre === f.nombre && usuario.password === f.password) {
       console.log('Ingresando');
-      this.router.navigate(['/tabs']); // Redirige a tabs en lugar de tabs/tab1
+      this.router.navigate(['/tabs'], { replaceUrl: true });
     } else {
       const alert = await this.alertController.create({
         header: 'Datos incorrectos',
@@ -50,9 +64,8 @@ export class LoginPage {
     try {
       const provider = new firebase.auth.GoogleAuthProvider();
       const result = await this.afAuth.signInWithPopup(provider);
-      // Aquí puedes almacenar la información del usuario si es necesario
       console.log('Usuario autenticado:', result.user);
-      this.router.navigate(['/tabs']); // Redirige después de la autenticación
+      this.router.navigate(['/tabs'], { replaceUrl: true });
     } catch (error) {
       console.error('Error durante el inicio de sesión con Google:', error);
       const alert = await this.alertController.create({
@@ -65,9 +78,6 @@ export class LoginPage {
   }
 
   registrar() {
-    // Navegar a la página de registro
-    this.router.navigate(['/registro']).then(() => {
-      window.location.reload();
-    });
+    this.router.navigate(['/registro'], { replaceUrl: true });
   }
 }

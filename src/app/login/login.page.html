@@ -5,23 +5,42 @@
     </ion-card-header>
     <ion-card-content>
       <form [formGroup]="formularioLogin">
+        
         <ion-item>
           <ion-label position="floating">Nombre</ion-label>
           <ion-input formControlName="nombre"></ion-input>
         </ion-item>
+
         <ion-item>
           <ion-label position="floating">Contraseña</ion-label>
-          <ion-input formControlName="password" type="password"></ion-input>
+          <ion-input 
+            [type]="passwordFieldType" 
+            formControlName="password" 
+            fill="solid">
+          </ion-input>
+          <ion-button 
+            fill="clear" 
+            size="small" 
+            slot="end" 
+            (click)="togglePasswordVisibility()">
+            <ion-icon [name]="passwordIcon"></ion-icon>
+          </ion-button>
         </ion-item>
+        
       </form>
       <br>
 
-      <!-- Botón de Google -->
-      <ion-button expand="block" class="google-button" (click)="loginWithGoogle()">
-        Iniciar sesión con Google
+      <!-- Botón de Ingresar -->
+      <ion-button expand="full" (click)="ingresar()">
+        <ion-icon name="log-in"></ion-icon>
+        Ingresar
       </ion-button>
 
-
+      <!-- Botón de Google -->
+      <ion-button expand="full" class="google-button" (click)="loginWithGoogle()">
+        <ion-icon slot="start" name="logo-google"></ion-icon>
+        Ingresar con Google
+      </ion-button>
 
       <ion-footer>
         <ion-toolbar color="primary">
