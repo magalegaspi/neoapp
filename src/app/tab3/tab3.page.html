@@ -1,17 +1,24 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
+      <ion-title>NeoApp</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-title>Foto Astronomica del Dia</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+
+  <ion-content *ngIf="imagenDelDia">
+    <ion-card-content>
+      <ion-card-title>{{ imagenDelDia.title }}</ion-card-title>
+    </ion-card-content>
+    <ion-card>
+      <img [src]="imagenDelDia.url" *ngIf="imagenDelDia.media_type === 'image'"/>
+    </ion-card>
+
+    <ion-content *ngIf="!imagenDelDia">
+      <p>Cargando...</p>
+    </ion-content>
+
 </ion-content>
