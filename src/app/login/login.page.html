@@ -19,12 +19,12 @@
           <ion-input 
             [type]="passwordFieldType" 
             formControlName="password" 
-            fill="solid" 
             class="contraseña">
+            <ion-button fill="clear" size="small" slot="end" (click)="togglePasswordVisibility()">
+              <ion-icon [name]="passwordIcon"></ion-icon>
+            </ion-button>
           </ion-input>
-          <ion-button fill="clear" size="small" slot="end" (click)="togglePasswordVisibility()">
-            <ion-icon [name]="passwordIcon"></ion-icon>
-          </ion-button>
+
         </ion-item>
 
       </form>

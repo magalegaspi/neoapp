@@ -155,19 +155,22 @@ body {
   }
   
   .contraseña {
-    min-height: 1cap; /* Altura mínima del campo */
-    max-height: 20px; /* Altura máxima del campo */
-    font-size: 10px; /* Tamaño de fuente */
-    padding: 4px; /* Espaciado interno */
-    margin-top: 0; /* Margen superior para alineación */
+    font-size: 14px;
+    padding: 8px; /* Espaciado interno */
   }
   
   
-  /* Si necesitas ajustar el ion-item también */
   ion-item {
-    --min-height: 56px; /* Establece una altura mínima adecuada para el ion-item */
-    padding: 0; /* Elimina el padding extra */
+    --highlight-color-focused: #0b3d91; /* Color al enfocar */
+    --padding-top: 8px;
+    --padding-bottom: 8px;
   }
+
+  ion-label {
+    color: #FFFFFF; /* Asegúrate de que sea visible en fondo oscuro */
+    font-size: 14px;
+  }
+  
   /* Botón de "Ingresar con Google" en rojo */
   .google-button{
     --background: #ff6666;

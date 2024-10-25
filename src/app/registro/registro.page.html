@@ -26,16 +26,15 @@
           <ion-input 
             [type]="passwordFieldType" 
             formControlName="password" 
-            fill="solid"
             class="contraseña">
-          </ion-input>
-          <ion-button 
+            <ion-button 
             fill="clear" 
             size="small" 
             slot="end" 
             (click)="togglePasswordVisibility()">
             <ion-icon [name]="passwordIcon"></ion-icon>
           </ion-button>
+          </ion-input>
         </ion-item>
 
         <!-- Campo Confirmar Contraseña -->
@@ -43,10 +42,8 @@
           <ion-label position="floating">Confirmar contraseña</ion-label>
           <ion-input 
             [type]="confirmPasswordFieldType" 
-            formControlName="confirmacionPassword" 
-            fill="solid">
-          </ion-input>
-          <ion-button 
+            formControlName="confirmacionPassword">
+            <ion-button 
             fill="clear" 
             size="small" 
             slot="end" 
@@ -54,6 +51,7 @@
             (click)="toggleConfirmPasswordVisibility()">
             <ion-icon [name]="confirmPasswordIcon"></ion-icon>
           </ion-button>
+          </ion-input>
         </ion-item>
 
         <br>
