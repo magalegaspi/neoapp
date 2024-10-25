@@ -168,4 +168,11 @@ body {
     --min-height: 56px; /* Establece una altura mínima adecuada para el ion-item */
     padding: 0; /* Elimina el padding extra */
   }
-  
+  /* Botón de "Ingresar con Google" en rojo */
+  .google-button{
+    --background: #ff6666;
+  }
+  /* Letras de los botones en blanco */
+  ion-button{
+  color: white;
+  }
