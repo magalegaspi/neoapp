@@ -179,3 +179,25 @@ body {
   ion-button{
   color: white;
   }
+
+  :root {
+    --eye-color-light: #000; /* Color del ojo en fondo claro */
+    --eye-color-dark: #fff;  /* Color del ojo en fondo oscuro */
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --eye-color: var(--eye-color-dark);
+    }
+  }
+  
+  @media (prefers-color-scheme: light) {
+    :root {
+      --eye-color: var(--eye-color-light);
+    }
+  }
+  
+  .ojito {
+    color: var(--eye-color); /* Aplica el color dinámico */
+  }
+  
