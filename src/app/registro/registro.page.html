@@ -14,6 +14,12 @@
     <ion-card-content>
       <form [formGroup]="formularioRegistro" (keyup.enter)="guardar()">
 
+        <!-- Campo Email -->
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+
         <!-- Campo Nombre -->
         <ion-item>
           <ion-label position="floating">Nombre</ion-label>
@@ -23,34 +29,34 @@
         <!-- Campo Contraseña -->
         <ion-item>
           <ion-label position="floating">Contraseña</ion-label>
-          <ion-input 
-            [type]="passwordFieldType" 
-            formControlName="password" 
+          <ion-input
+            [type]="passwordFieldType"
+            formControlName="password"
             class="contraseña">
-            <ion-button 
-            fill="clear" 
-            size="small" 
-            slot="end" 
-            (click)="togglePasswordVisibility()">
-            <ion-icon [name]="passwordIcon"></ion-icon>
-          </ion-button>
+            <ion-button
+              fill="clear"
+              size="small"
+              slot="end"
+              (click)="cambiarVisibilidadContrasenia()">
+              <ion-icon [name]="passwordIcon"></ion-icon>
+            </ion-button>
           </ion-input>
         </ion-item>
 
         <!-- Campo Confirmar Contraseña -->
         <ion-item>
           <ion-label position="floating">Confirmar contraseña</ion-label>
-          <ion-input 
-            [type]="confirmPasswordFieldType" 
+          <ion-input
+            [type]="confirmPasswordFieldType"
             formControlName="confirmacionPassword">
-            <ion-button 
-            fill="clear" 
-            size="small" 
-            slot="end" 
-            class="contraseña"
-            (click)="toggleConfirmPasswordVisibility()">
-            <ion-icon [name]="confirmPasswordIcon"></ion-icon>
-          </ion-button>
+            <ion-button
+              fill="clear"
+              size="small"
+              slot="end"
+              class="contraseña"
+              (click)="cambiarConfirmacionVisibilidadContrasenia()">
+              <ion-icon [name]="confirmPasswordIcon"></ion-icon>
+            </ion-button>
           </ion-input>
         </ion-item>
 

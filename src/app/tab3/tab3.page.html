@@ -1,23 +1,32 @@
 <ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Encabezado de la aplicación -->
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-title class="navBar">NeoApp</ion-title>
-      <ion-title>Foto Astronomica del Dia</ion-title>
+      <ion-title>Foto Astronómica del Día</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content *ngIf="imagenDelDia">
+  <!-- Contenido principal que se muestra si 'imagenDelDia' está disponible -->
+  <ion-content *ngIf="imagenDelDia; else loading">
     <div class="container">
-    <ion-card-content>
-      <h2>{{ imagenDelDia.title }}</h2>
-    </ion-card-content>
-    <ion-card>
-      <img [src]="imagenDelDia.url" *ngIf="imagenDelDia.media_type === 'image'"/>
-    </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <!-- Título de la imagen del día -->
+          <ion-card-title>{{ imagenDelDia.title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <!-- Muestra la imagen si el tipo de medio es una imagen -->
+          <img [src]="imagenDelDia.url" *ngIf="imagenDelDia.media_type === 'image'"/>
+          <!-- Mensaje alternativo si el tipo de medio es un video -->
+          <p *ngIf="imagenDelDia.media_type === 'video'">Esta es un video, por favor revisa el enlace.</p>
+        </ion-card-content>
+      </ion-card>
     </div>
+  </ion-content>
 
-    <ion-content *ngIf="!imagenDelDia">
-      <p>Cargando...</p>
-    </ion-content>
-
+  <!-- Plantilla de carga que se muestra si 'imagenDelDia' no está disponible -->
+  <ng-template #loading>
+    <p>Cargando...</p>
+  </ng-template>
 </ion-content>

@@ -1,8 +1,8 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/compat/auth'; 
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 
 @Component({
@@ -10,74 +10,99 @@ import firebase from 'firebase/compat/app';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
-
+export class LoginPage implements OnInit {
   formularioLogin: FormGroup;
-
-  // Control de visibilidad del campo de contraseña
-  passwordFieldType: string = 'password';
-  passwordIcon: string = 'eye-off';
+  passwordFieldType: string = 'password'; // Tipo de campo para la contraseña
+  passwordIcon: string = 'eye-off'; // Icono que representa la visibilidad de la contraseña
 
   constructor(
-    public fb: FormBuilder,
-    public alertController: AlertController,
-    private router: Router,
-    private afAuth: AngularFireAuth 
+    private fb: FormBuilder, // Inyecta el FormBuilder para crear formularios reactivos
+    private alertController: AlertController, // Inyecta el AlertController para mostrar alertas
+    private router: Router, // Inyecta el Router para la navegación
+    private afAuth: AngularFireAuth // Inyecta AngularFireAuth para la autenticación con Firebase
   ) {
+    // Inicializa el formulario de inicio de sesión con validaciones
     this.formularioLogin = this.fb.group({
-      'nombre': new FormControl("", Validators.required),
-      'password': new FormControl("", Validators.required),
+      email: ['', [Validators.required, Validators.email]], // Campo de correo electrónico
+      password: ['', Validators.required], // Campo de contraseña
     });
   }
 
-  // Alternar visibilidad del campo de contraseña
-  togglePasswordVisibility() {
-    if (this.passwordFieldType === 'password') {
-      this.passwordFieldType = 'text';
-      this.passwordIcon = 'eye';
-    } else {
-      this.passwordFieldType = 'password';
-      this.passwordIcon = 'eye-off';
-    }
+  ngOnInit() {
+    // Método que se ejecuta al inicializar el componente
   }
 
+  /**
+   * Método para iniciar sesión
+   * Intenta autenticar al usuario con Firebase y redirige a la página principal.
+   */
   async ingresar() {
-    const f = this.formularioLogin.value;
-    const usuarioString = localStorage.getItem('usuario');
-    const usuario = usuarioString ? JSON.parse(usuarioString) : null;
+    const { email, password } = this.formularioLogin.value; // Obtiene los valores del formulario
+    try {
+      await this.afAuth.signInWithEmailAndPassword(email, password); // Intenta iniciar sesión
+      this.router.navigate(['/tabs'], { replaceUrl: true }); // Redirige a la página principal
+    } catch (error: any) { // Captura errores de autenticación
+      console.error('Error en el ingreso:', error);
+      let errorMessage: string;
 
-    if (usuario && usuario.nombre === f.nombre && usuario.password === f.password) {
-      console.log('Ingresando');
-      this.router.navigate(['/tabs'], { replaceUrl: true });
-    } else {
+      // Manejo de errores específicos
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'No hay ninguna cuenta asociada a este correo electrónico.'; // Mensaje si el usuario no existe
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'La contraseña es incorrecta. Por favor, inténtalo de nuevo.'; // Mensaje si la contraseña es incorrecta
+      } else {
+        errorMessage = 'Ocurrió un error inesperado. Intenta de nuevo.'; // Mensaje para otros errores
+      }
+
+      // Muestra una alerta con el mensaje de error
       const alert = await this.alertController.create({
-        header: 'Datos incorrectos',
-        message: 'Los datos ingresados no son correctos',
+        header: 'Error de inicio de sesión',
+        message: errorMessage,
         buttons: ['Aceptar']
       });
       await alert.present();
-      this.formularioLogin.reset();
     }
   }
 
-  async loginWithGoogle() {
+  /**
+   * Método para alternar visibilidad de la contraseña
+   * Cambia el tipo de campo de contraseña entre 'password' y 'text'.
+   */
+  visibilidadContrasenia() {
+    if (this.passwordFieldType === 'password') {
+      this.passwordFieldType = 'text'; // Cambia a texto para mostrar la contraseña
+      this.passwordIcon = 'eye'; // Cambia el icono a 'eye' para indicar que se puede ver
+    } else {
+      this.passwordFieldType = 'password'; // Cambia de nuevo a 'password' para ocultar la contraseña
+      this.passwordIcon = 'eye-off'; // Cambia el icono a 'eye-off'
+    }
+  }
+
+  /**
+   * Método para ir a la página de registro
+   * Navega a la página de registro cuando el usuario lo solicita.
+   */
+  registrar() {
+    this.router.navigate(['/registro']); // Redirige a la página de registro
+  }
+
+  /**
+   * Método para iniciar sesión con Google
+   * Intenta autenticar al usuario utilizando Google como proveedor.
+   */
+  async ingresarConGoogle() {
     try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      const result = await this.afAuth.signInWithPopup(provider);
-      console.log('Usuario autenticado:', result.user);
-      this.router.navigate(['/tabs'], { replaceUrl: true });
-    } catch (error) {
-      console.error('Error durante el inicio de sesión con Google:', error);
+      const provider = new firebase.auth.GoogleAuthProvider(); // Crea un proveedor de autenticación de Google
+      await this.afAuth.signInWithPopup(provider); // Muestra el popup de Google para iniciar sesión
+      this.router.navigate(['/tabs'], { replaceUrl: true }); // Redirige a la página principal
+    } catch (error: any) {
+      // Muestra una alerta con el mensaje de error en caso de fallo
       const alert = await this.alertController.create({
         header: 'Error',
-        message: 'No se pudo iniciar sesión con Google. Intenta de nuevo.',
-        buttons: ['Aceptar']
+        message: error.message,
+        buttons: ['OK'],
       });
       await alert.present();
     }
-  }
-
-  registrar() {
-    this.router.navigate(['/registro'], { replaceUrl: true });
   }
 }
