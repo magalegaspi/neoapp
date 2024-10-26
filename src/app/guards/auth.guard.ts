@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
 
   // Método que se ejecuta al intentar activar una ruta.
   canActivate(): Observable<boolean> {
-    return this.afAuth.authState.pipe( // Escucha el estado de autenticación del usuario
+    return this.afAuth.authState.pipe( // Escucha el estado de autenticación del usuario.
       map(user => {
         if (user) {
           return true; // Permite el acceso si el usuario está autenticado
