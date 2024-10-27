@@ -166,10 +166,7 @@ body {
     --padding-bottom: 8px;
   }
 
-  ion-label {
-    color: #FFFFFF; /* Asegúrate de que sea visible en fondo oscuro */
-    font-size: 14px;
-  }
+
   
   /* Botón de "Ingresar con Google" en rojo */
   .google-button{
@@ -189,11 +186,19 @@ body {
     :root {
       --eye-color: var(--eye-color-dark);
     }
+    ion-label {
+      color: #FFFFFF; /* Label de las tabs visible en fondo oscuro */
+      font-size: 14px;
+    }
   }
   
   @media (prefers-color-scheme: light) {
     :root {
       --eye-color: var(--eye-color-light);
+    }
+    ion-label {
+      color: black; /* Label de las tabs visible en fondo claro */
+      font-size: 14px;
     }
   }
   

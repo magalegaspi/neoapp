@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EarthService } from '../services/earth.service'; // Importa el servicio para obtener imágenes satelitales
-import { AlertController } from '@ionic/angular'; // Importa AlertController para mostrar alertas
+import { AlertController, LoadingController } from '@ionic/angular'; // Importa AlertController y LoadingController
 import { lastValueFrom } from 'rxjs'; // Importa lastValueFrom para convertir un Observable a una Promesa
 
 @Component({
@@ -27,8 +27,23 @@ export class Tab2Page {
 
   constructor(
     private earthService: EarthService, // Inyecta el servicio para obtener imágenes
-    private alertController: AlertController // Inyecta el controlador de alertas
+    private alertController: AlertController, // Inyecta el controlador de alertas
+    private loadingController: LoadingController // Inyecta el controlador de loading
   ) {}
+
+  // Método para mostrar un loader mientras se obtiene la imagen
+  async mostrarLoader() {
+    const loader = await this.loadingController.create({
+      message: 'Cargando...', // Muestra un mensaje de carga
+      spinner: 'crescent' // Utiliza un spinner tipo 'crescent'
+    });
+    await loader.present(); // Presenta el loader
+  }
+
+  // Método para ocultar el loader
+  async ocultarLoader() {
+    await this.loadingController.dismiss(); // Cierra el loader
+  }
 
   // Método para mostrar una alerta en caso de error al obtener la imagen
   async mostrarAlerta() {
@@ -52,6 +67,8 @@ export class Tab2Page {
           const lon = position.coords.longitude; // Obtiene la longitud
 
           try {
+            await this.mostrarLoader(); // Muestra el loader antes de obtener la imagen
+
             const imagenBlob = await lastValueFrom(this.earthService.obtenerImagenSatelital(lat, lon)); // Obtiene la imagen satelital
             if (imagenBlob) {
               this.imagenSatelital = URL.createObjectURL(imagenBlob); // Crea un objeto URL para la imagen
@@ -63,6 +80,8 @@ export class Tab2Page {
             console.error('Error obteniendo la imagen satelital:', error);
             this.mostrarAlerta(); // Muestra alerta en caso de error
             this.imagenSatelital = null; // Reinicia la imagen
+          } finally {
+            await this.ocultarLoader(); // Oculta el loader al finalizar
           }
         },
         (error) => { // Callback si ocurre un error al obtener la posición
@@ -80,6 +99,8 @@ export class Tab2Page {
   async obtenerImagenDeLugar(lugar: { nombre: string; lat: number; lon: number }) {
     this.tituloLugarSeleccionado = lugar.nombre; // Actualiza el título con el lugar seleccionado
     try {
+      await this.mostrarLoader(); // Muestra el loader antes de obtener la imagen
+
       const imagenBlob = await lastValueFrom(this.earthService.obtenerImagenSatelital(lugar.lat, lugar.lon)); // Obtiene la imagen satelital
       if (imagenBlob) {
         this.imagenSatelital = URL.createObjectURL(imagenBlob); // Crea un objeto URL para la imagen
@@ -91,6 +112,9 @@ export class Tab2Page {
       console.error('Error obteniendo la imagen satelital:', error);
       this.mostrarAlerta(); // Muestra alerta en caso de error
       this.imagenSatelital = null; // Reinicia la imagen
+    } finally {
+      await this.ocultarLoader(); // Oculta el loader al finalizar
     }
   }
 }
+
