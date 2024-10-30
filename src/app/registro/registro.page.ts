@@ -85,12 +85,17 @@ export class RegistroPage implements OnInit {
         let errorMessage: string;
 
         // Manejo de errores específicos
-        if (error.code === 'auth/email-already-in-use') {
-          errorMessage = 'Este correo electrónico ya está en uso. Por favor, intenta con otro.'; // Mensaje si el email ya está en uso
-        } else {
-          errorMessage = 'No se pudo registrar al usuario. Intenta de nuevo.'; // Mensaje general de error
+        switch(error.code){
+          case "auth/weak-password":
+            errorMessage = "La contraseña debe tener como mínimo 6 caracteres." //Mensaje si la contraseña no cumple con el requisito de 6 caracteres mínimo
+            break;
+          case 'auth/email-already-in-use':
+            errorMessage = 'Este correo electrónico ya está en uso. Por favor, intenta con otro.'; // Mensaje si el email ya está en uso
+          break;
+            default:
+              errorMessage = 'No se pudo registrar al usuario. Intenta de nuevo.'; // Mensaje general de error
         }
-
+        //Crear la alerta del error
         const alert = await this.alertController.create({ // Crea una alerta para mostrar el error
           header: 'Error',
           message: errorMessage, // Mensaje del error

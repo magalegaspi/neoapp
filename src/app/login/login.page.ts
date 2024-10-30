@@ -46,12 +46,18 @@ export class LoginPage implements OnInit {
       let errorMessage: string;
 
       // Manejo de errores específicos
-      if (error.code === 'auth/user-not-found') {
-        errorMessage = 'No hay ninguna cuenta asociada a este correo electrónico.'; // Mensaje si el usuario no existe
-      } else if (error.code === 'auth/wrong-password') {
+      switch(error.code){
+        case 'auth/user-not-found':
+          errorMessage = 'No hay ninguna cuenta asociada a este correo electrónico.'; // Mensaje si el usuario no existe
+        break;
+        case 'auth/wrong-password': 
         errorMessage = 'La contraseña es incorrecta. Por favor, inténtalo de nuevo.'; // Mensaje si la contraseña es incorrecta
-      } else {
-        errorMessage = 'Ocurrió un error inesperado. Intenta de nuevo.'; // Mensaje para otros errores
+        break;
+        case "auth/invalid-credential":
+          errorMessage = 'Contraseña o correo electrónico inválido. Por favor, inténtalo de nuevo.'; //Mensaje si las credenciales son inválidas
+        break;
+        default:
+          errorMessage = 'Ocurrió un error inesperado. Intenta de nuevo.'; // Mensaje para otros errores
       }
 
       // Muestra una alerta con el mensaje de error
